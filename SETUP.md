@@ -34,3 +34,14 @@ Open the project in Cursor → Settings → Rules. You should see project rules 
 ## 5. Multi-repo products
 
 See [MULTI_REPO.md](./MULTI_REPO.md).
+
+## Existing projects (already have trackers)
+
+If the repo already has phase trackers, QA PDFs, contrib logs, etc.:
+
+1. Create `old-stuff/` and **move** (do not delete) those files there.
+2. Keep a short `old-stuff/README.md` index.
+3. Copy the important facts into `docs/ai/` (active, progress, decisions, lessons).
+4. Point `AGENTS.md` at `old-stuff/` for deep history.
+
+Living AI memory stays in `docs/ai/`. Archives stay in `old-stuff/`.
