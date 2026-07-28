@@ -1,0 +1,28 @@
+---
+description: acp2gh = add, commit, push to GitHub (max 29 commits/session)
+alwaysApply: true
+---
+
+# acp2gh
+
+When the user says **`acp2gh`**:
+
+- **a** = add, **c** = commit, **p** = push, **2** = to, **gh** = GitHub
+- Immediately `git add` → logical `git commit`(s) → `git push` for every repo with changes
+- That phrase **is** permission to commit and push (no extra ask)
+
+## Limits
+
+Follow `COMMIT_AND_BADGES.md` / skill `acp2gh`:
+
+1. Max **29** commits this session
+2. Small real commits only — no empty/junk
+3. No `git config` changes; no force-push to main unless explicitly requested
+4. Never commit secrets
+
+## Flow
+
+1. `git status` / `git diff` / recent `git log` per dirty repo
+2. Stage + split commits by feature/file group
+3. Push tracking branch (`-u` if needed)
+4. Report SHAs and what was left uncommitted if budget exhausted

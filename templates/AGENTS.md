@@ -44,3 +44,5 @@ src/   # …
 ## Commits / push
 
 Follow the vibe-coding template `COMMIT_AND_BADGES.md`: max **29** commits per session; prefer PR workflow.
+
+Shortcut: user says **`acp2gh`** → add, commit, push to GitHub (see rule `02-acp2gh.mdc` / skill `acp2gh`).

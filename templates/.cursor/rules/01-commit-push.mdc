@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Commit and push
 
-When the user asks to commit and/or push:
+When the user asks to commit and/or push, **or says `acp2gh`**:
 
 1. Max **29** commits this session. Split real work into small logical commits.
 2. No empty or junk commits. Do not change git config.
@@ -13,3 +13,7 @@ When the user asks to commit and/or push:
 4. Use `Co-authored-by` only if the project documents a real second GitHub identity.
 5. Author email should remain the repo’s configured identity (contribution email on GitHub).
 6. Never force-push main/master unless the user explicitly asks.
+
+### `acp2gh`
+
+**a**=add **c**=commit **p**=push **2**=to **gh**=GitHub. Treat as explicit permission to stage, commit, and push (see `02-acp2gh.mdc`).
