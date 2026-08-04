@@ -25,6 +25,14 @@ Project rule template: `templates/.cursor/rules/02-acp2gh.mdc`
 **Max 29 commits per chat/work session** when the user asks to commit/push (including via `acp2gh`).  
 Prefer many small *real* commits. Never empty/junk commits.
 
+### Individual `acp2gh` (code repo + AI hub)
+
+When the user asks for **`acp2gh`** on an app **and** its `mac/ai` hub (or “same for mac/ai”):
+
+1. Run **`acp2gh` separately on each dirty git repo** (code checkout, then `ai/projects`, then `vibe-coding` if templates changed).
+2. Each repo gets its own logical split — aim for **many small commits up to the 29 session max**, shared across those repos in one chat.
+3. Keep hub memory (`docs/ai/`, rules, `COMMIT_AND_BADGES.md`) in the **AI hub repo**, not inside the app clone.
+
 ## When user says push / commit / acp2gh
 
 1. Inspect status + diff.
