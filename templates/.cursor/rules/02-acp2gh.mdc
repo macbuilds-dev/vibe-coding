@@ -15,7 +15,7 @@ When the user says **`acp2gh`**:
 
 Follow `COMMIT_AND_BADGES.md` / skill `acp2gh`:
 
-1. Max **29** commits this session
+1. Max **29** commits this session (unless user **explicitly waives** the cap for this ship)
 2. Small real commits only — no empty/junk
 3. No `git config` changes; no force-push to main unless explicitly requested
 4. Never commit secrets

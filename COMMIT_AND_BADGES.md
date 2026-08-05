@@ -25,6 +25,8 @@ Project rule template: `templates/.cursor/rules/02-acp2gh.mdc`
 **Max 29 commits per chat/work session** when the user asks to commit/push (including via `acp2gh`).  
 Prefer many small *real* commits. Never empty/junk commits.
 
+**Waiver:** If the user **explicitly** says to overlook / exceed the 29 limit for this ship, do so for that session only. Still prefer many small real commits; never empty/junk commits.
+
 ### Individual `acp2gh` (code repo + AI hub)
 
 When the user asks for **`acp2gh`** on an app **and** its `mac/ai` hub (or “same for mac/ai”):
@@ -67,4 +69,4 @@ Do not invent fake co-authors. Set `SECOND_COAUTHOR` in project `docs/ai/decisio
 - Empty commits, whitespace-only spam
 - Force-push to main unless explicitly requested
 - Changing git config in agent sessions
-- Exceeding 29 commits in one session
+- Exceeding 29 commits in one session (unless the user explicitly waived the cap for that ship)
