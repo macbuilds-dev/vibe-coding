@@ -23,5 +23,6 @@ for f in product architecture decisions active progress lessons; do
 done
 copy_if_missing ".cursor/rules/00-memory-workflow.mdc"
 copy_if_missing ".cursor/rules/01-commit-push.mdc"
+copy_if_missing ".cursor/rules/02-acp2gh.mdc"
 
 echo "Done. Fill AGENTS.md and docs/ai/*.md with project-specific facts."
