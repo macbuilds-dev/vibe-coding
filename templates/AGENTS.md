@@ -31,6 +31,7 @@ src/   # …
 
 ## Do not
 
+- Run package installers on a **fresh clone** until `.cursor/rules/00-clone-malware-scan.mdc` passes
 - Commit secrets (`.env`, key files)
 - Drive-by refactors unrelated to the task
 - Change public API shapes without updating callers + `docs/ai/`

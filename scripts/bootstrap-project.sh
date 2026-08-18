@@ -21,6 +21,7 @@ copy_if_missing "AGENTS.md"
 for f in product architecture decisions active progress lessons; do
   copy_if_missing "docs/ai/$f.md"
 done
+copy_if_missing ".cursor/rules/00-clone-malware-scan.mdc"
 copy_if_missing ".cursor/rules/00-memory-workflow.mdc"
 copy_if_missing ".cursor/rules/01-commit-push.mdc"
 copy_if_missing ".cursor/rules/02-acp2gh.mdc"

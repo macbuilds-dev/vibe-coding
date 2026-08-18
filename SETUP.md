@@ -26,6 +26,7 @@ Open the project in Cursor → Settings → Rules. You should see project rules 
 
 ## 4. First session ritual
 
+0. **Fresh clone:** run the malware scan in `.cursor/rules/00-clone-malware-scan.mdc` **before** `pub get` / `npm install` / any install hook. A folder that “used to be on this Mac” still counts if it is a new clone.
 1. Read `docs/ai/active.md` + `AGENTS.md`
 2. Do the work
 3. Update `active.md` / `progress.md` (show memory diff before commit — recommended)
