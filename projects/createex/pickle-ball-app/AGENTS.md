@@ -50,3 +50,8 @@ assets/    # pngs, svgs, fonts, video, pdf
 
 - Before non-trivial work: read `docs/ai/active.md` and this file
 - After meaningful work: update `docs/ai/active.md` and `docs/ai/progress.md`
+
+## Commit identity (required)
+
+`acp2gh` / commits must use **`macbuilds-dev <muhammadammarchaudhry1@gmail.com>`** (never hostname/`*.local` email).  
+Slark/DFC repos are the only exception (their own identity).
