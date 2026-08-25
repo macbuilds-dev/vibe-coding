@@ -1,20 +1,22 @@
 # Active context
 
 ## Current focus
-Ship mobile updates from client feedback + stable Android release builds.
+Ship **1.1.7+28** store builds (Play AAB ready; iOS archive blocked on missing signing private key until certs recreated in Xcode).
 
 ## Recent changes (mobile — complete)
-- **Start $12.50 Lesson**: backend-first pool lookup + branding pool fallback; client empty message.
-- Meta App Events wired (Android/iOS).
-- Overlay-safe snackbars on home / quick lesson / profile photo update.
-- Android: Kotlin bumped to **2.3.20** (Gradle/AGP left at 8.14 / 8.11.1 — AGP 9 blocked by plugin deps).
+- **Start $12.50 Lesson**: backend owns instructor pool — mobile only calls `GET /sessions/default` (no client-side pool walk). Exact 404 copy; generic message for 400/ops errors.
+- **Paddle branding**: `GET /branding` → overlay `paddleInitials` / `paddleTextColor` on home nearby paddle (`BrandedPaddleImage`).
+- **Address privacy**: session cards/models show **city** only (no street) for public session location.
+- Version bumped to **1.1.7+28**.
+- Android: Kotlin `compilerOptions` DSL (`JvmTarget.JVM_11`); signed **AAB** built at `build/app/outputs/bundle/release/app-release.aab`.
 
 ## How to verify
-1. Admin sets ordered fallback instructor pool on live branding.
-2. Tap Start $12.50 Lesson → first open slot; all full → empty message.
-3. Meta Test events on physical device.
-4. `flutter build apk --release` succeeds.
+1. Admin has ordered default instructor pool on live branding.
+2. Tap Start $12.50 Lesson → open slot books; full pool → exact empty message.
+3. Home paddle shows admin initials/color (defaults TPI/green).
+4. Browse/session cards show city, not street.
+5. Upload AAB to Play Console; iOS: recreate Apple Development (+ Distribution) certs in Xcode → Archive.
 
 ## Blockers
-- Full Gradle 9 / AGP 9 upgrade deferred (Stripe/file_picker compileSdk + tapandpay resolution on AGP 9).
-- Live branding still needs pool IDs saved in admin.
+- iOS archive: Apple Development cert exists for this Mac but **private key missing** — revoke/recreate in Xcode Manage Certificates, then Archive.
+- Live branding pool must be configured by admin or CTA returns 400/404.
