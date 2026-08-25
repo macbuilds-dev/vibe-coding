@@ -3,6 +3,47 @@
 Owner account: **macbuilds-dev**  
 Contribution email: **muhammadammarchaudhry1@gmail.com** (must be verified on GitHub)
 
+## Required commit identity (HARD RULE)
+
+**Every commit and push** (including `acp2gh`) MUST use:
+
+| Field | Value |
+|-------|--------|
+| **Name** | `macbuilds-dev` |
+| **Email** | `muhammadammarchaudhry1@gmail.com` |
+
+Agents must set author/committer **per commit** (do **not** rely on hostname fallback):
+
+```bash
+git -c user.name="macbuilds-dev" -c user.email="muhammadammarchaudhry1@gmail.com" commit ...
+```
+
+Or:
+
+```bash
+export GIT_AUTHOR_NAME="macbuilds-dev"
+export GIT_AUTHOR_EMAIL="muhammadammarchaudhry1@gmail.com"
+export GIT_COMMITTER_NAME="macbuilds-dev"
+export GIT_COMMITTER_EMAIL="muhammadammarchaudhry1@gmail.com"
+```
+
+**Never** commit as `*@*.local`, machine hostname emails, or any other identity.
+
+### Exception — Slark / DFC only
+
+Repos under **`projects/slark/`** (including **`dfc`**) are **exempt**. Use that repo’s own configured identity; do **not** force `macbuilds-dev` / `muhammadammarchaudhry1@gmail.com` there.
+
+All other repos (createex apps, personal apps, `vibe-coding` hub, etc.) use the identity above.
+
+Before every `acp2gh` push, verify the latest commit:
+
+```bash
+git log -1 --format='%an <%ae>'
+# expect: macbuilds-dev <muhammadammarchaudhry1@gmail.com>
+```
+
+If wrong, **stop**, rewrite with the correct author, then push.
+
 ## Shortcut: `acp2gh`
 
 User shorthand:
@@ -40,11 +81,12 @@ When the user asks for **`acp2gh`** on an app **and** its `mac/ai` hub (or “sa
 ## When user says push / commit / acp2gh
 
 1. Inspect status + diff.
-2. Split into logical commits (file or feature sized), ≤ 29 total this session.
-3. Prefer a feature branch + PR for Push/merge flow (helps Pull Shark) when appropriate; if user said `acp2gh` on an existing shipping branch (e.g. `main`), push that branch unless they asked for a PR.
-4. Show `docs/ai/` memory diffs; wait for OK before committing memory (recommended).
-5. Push with `-u` if needed; open PR with `gh pr create` when appropriate.
-6. After merge (or if user wants YOLO-style): document what was done in `progress.md`.
+2. Confirm commit identity (`macbuilds-dev` / `muhammadammarchaudhry1@gmail.com`) unless Slark/DFC.
+3. Split into logical commits (file or feature sized), ≤ 29 total this session.
+4. Prefer a feature branch + PR for Push/merge flow (helps Pull Shark) when appropriate; if user said `acp2gh` on an existing shipping branch (e.g. `main`), push that branch unless they asked for a PR.
+5. Show `docs/ai/` memory diffs; wait for OK before committing memory (recommended).
+6. Push with `-u` if needed; open PR with `gh pr create` when appropriate.
+7. After merge (or if user wants YOLO-style): document what was done in `progress.md`.
 
 ## Badge-oriented habits (legitimate)
 
@@ -70,5 +112,7 @@ Do not invent fake co-authors. Set `SECOND_COAUTHOR` in project `docs/ai/decisio
 
 - Empty commits, whitespace-only spam
 - Force-push to main unless explicitly requested
-- Changing git config in agent sessions
+- Committing with hostname / `*.local` email (breaks contribution streak)
+- Changing global git config in agent sessions (use per-commit `-c` / env instead)
 - Exceeding 29 commits in one session (unless the user explicitly waived the cap for that ship)
+- Using `macbuilds-dev` identity on **Slark/DFC** repos

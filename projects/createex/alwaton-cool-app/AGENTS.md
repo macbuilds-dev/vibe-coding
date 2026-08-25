@@ -47,3 +47,5 @@ src/   # …
 Follow the vibe-coding template `COMMIT_AND_BADGES.md`: max **29** commits per session; prefer PR workflow.
 
 Shortcut: user says **`acp2gh`** → add, commit, push to GitHub (see rule `02-acp2gh.mdc` / skill `acp2gh`).
+
+**Commit identity (required):** `macbuilds-dev <muhammadammarchaudhry1@gmail.com>` — never hostname/`*.local` email. **Exception:** Slark/DFC repos use their own identity.

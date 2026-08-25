@@ -11,18 +11,35 @@ When the user says **`acp2gh`**:
 - Immediately `git add` → logical `git commit`(s) → `git push` for every repo with changes
 - That phrase **is** permission to commit and push (no extra ask)
 
+## Required identity (HARD)
+
+Unless this is a **Slark/DFC** repo (`projects/slark/**`):
+
+Every commit MUST be:
+
+- **Name:** `macbuilds-dev`
+- **Email:** `muhammadammarchaudhry1@gmail.com`
+
+```bash
+git -c user.name="macbuilds-dev" -c user.email="muhammadammarchaudhry1@gmail.com" commit -m "..."
+```
+
+Never use `*@*.local` or hostname emails. Verify with `git log -1 --format='%an <%ae>'` before push.
+
+**Slark/DFC exception:** use that repo’s own identity; do not force the above.
+
 ## Limits
 
 Follow `COMMIT_AND_BADGES.md` / skill `acp2gh`:
 
 1. Max **29** commits this session (unless user **explicitly waives** the cap for this ship)
 2. Small real commits only — no empty/junk
-3. No `git config` changes; no force-push to main unless explicitly requested
+3. No global `git config` changes; no force-push to main unless explicitly requested
 4. Never commit secrets
 
 ## Flow
 
 1. `git status` / `git diff` / recent `git log` per dirty repo
-2. Stage + split commits by feature/file group
+2. Stage + split commits by feature/file group (with required identity above)
 3. Push tracking branch (`-u` if needed)
 4. Report SHAs and what was left uncommitted if budget exhausted
