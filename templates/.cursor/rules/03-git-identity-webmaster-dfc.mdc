@@ -1,0 +1,49 @@
+---
+description: REQUIRED git author for webmaster-dfc GitHub repos — never use Cursor/Ammar identity
+alwaysApply: true
+---
+
+# Git identity — webmaster-dfc (STRICT)
+
+All commits pushed to **github.com/webmaster-dfc/** must use:
+
+| Field | Value |
+|-------|--------|
+| **user.name** | `webmaster-dfc` |
+| **user.email** | `webmaster@drugfreecompliance.com` |
+
+## Repos (each is its own git root)
+
+- `~/mac/slark/dfc/dfc-backend` → `webmaster-dfc/dfc-backend`
+- `~/mac/slark/dfc/dfc-frontend` → `webmaster-dfc/dfc-frontend`
+- `~/mac/slark/dfc/dfc-admin` → `webmaster-dfc/dfc-admin`
+
+## Before every commit (agent MUST)
+
+1. **Never** commit as `Ammar Chaudhry`, `mac@…local`, Cursor default, `macbuilds-dev`, or `muhammadammarchaudhry1@gmail.com`.
+2. Use **`--author`** on every commit (do not rely on auto-detected hostname identity):
+
+```bash
+git commit --author="webmaster-dfc <webmaster@drugfreecompliance.com>" -m "…"
+```
+
+3. Optional one-time **local** config per repo (not global):
+
+```bash
+cd ~/mac/slark/dfc/dfc-backend   # repeat for frontend + admin
+git config user.name "webmaster-dfc"
+git config user.email "webmaster@drugfreecompliance.com"
+```
+
+4. Verify before push:
+
+```bash
+git log -1 --format='%an <%ae>'
+# must show: webmaster-dfc <webmaster@drugfreecompliance.com>
+```
+
+## Push target
+
+- **Remote:** `origin` → `https://github.com/webmaster-dfc/<repo>.git`
+- **Branch:** `main` unless user specifies otherwise
+- **Never** force-push `main` unless user explicitly asks
