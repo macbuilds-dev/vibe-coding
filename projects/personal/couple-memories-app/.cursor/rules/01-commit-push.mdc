@@ -11,7 +11,7 @@ When the user asks to commit and/or push, **or says `acp2gh`**:
 2. No empty or junk commits. Do not change global git config.
 3. Prefer feature branch + PR (`gh pr create`) when it helps review or Pull Shark.
 4. Use `Co-authored-by` only if the project documents a real second GitHub identity.
-5. **Author identity (required):** `macbuilds-dev <muhammadammarchaudhry1@gmail.com>` on all repos **except Slark/DFC**. Set per commit via `git -c user.name=... -c user.email=...`. Never hostname/`*.local` email.
+5. **Author identity (required):** `macbuilds-dev <muhammadammarchaudhry1@gmail.com>` on `repos/*` and `other repos/*`. `webmaster-dfc <webmaster@drugfreecompliance.com>` on `webmaster-dfc/*` only. See `03-git-identity-*.mdc`. Never hostname/`*.local` email.
 6. Never force-push main/master unless the user explicitly asks.
 
 ### `acp2gh`

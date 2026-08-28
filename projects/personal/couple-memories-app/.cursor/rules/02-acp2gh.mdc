@@ -13,20 +13,20 @@ When the user says **`acp2gh`**:
 
 ## Required identity (HARD)
 
-Unless this is a **Slark/DFC** repo (`projects/slark/**`):
-
-Every commit MUST be:
-
-- **Name:** `macbuilds-dev`
-- **Email:** `muhammadammarchaudhry1@gmail.com`
+| Repo path / org | Name | Email |
+|-----------------|------|-------|
+| `repos/*`, `other repos/*`, `macbuilds-dev/*` | `macbuilds-dev` | `muhammadammarchaudhry1@gmail.com` |
+| `webmaster-dfc/*` only | `webmaster-dfc` | `webmaster@drugfreecompliance.com` |
 
 ```bash
+# default (macbuilds-dev)
 git -c user.name="macbuilds-dev" -c user.email="muhammadammarchaudhry1@gmail.com" commit -m "..."
+# webmaster-dfc only
+git commit --author="webmaster-dfc <webmaster@drugfreecompliance.com>" -m "…"
 ```
 
-Never use `*@*.local` or hostname emails. Verify with `git log -1 --format='%an <%ae>'` before push.
-
-**Slark/DFC exception:** use that repo’s own identity; do not force the above.
+Never use `*@*.local` or hostname emails. Verify with `git log -1 --format='%an <%ae>'` before push.  
+Full rules: `03-git-identity-macbuilds-dev.mdc` / `03-git-identity-webmaster-dfc.mdc`.
 
 ## Limits
 
