@@ -31,7 +31,8 @@ src/   # …
 
 ## Do not
 
-- Run package installers on a **fresh clone** until `.cursor/rules/00-clone-malware-scan.mdc` passes
+- Run package installers on a **fresh clone** until `.cursor/rules/00-clone-malware-scan.mdc` and `.cursor/rules/00-woff2-folderopen-dropper.mdc` pass
+- Open a fresh GitHub clone as a trusted Cursor/VS Code folder before those scans pass (`folderOpen` is the dropper)
 - Commit secrets (`.env`, key files)
 - Drive-by refactors unrelated to the task
 - Change public API shapes without updating callers + `docs/ai/`
@@ -48,4 +49,4 @@ Follow the vibe-coding template `COMMIT_AND_BADGES.md`: max **29** commits per s
 
 Shortcut: user says **`acp2gh`** → add, commit, push to GitHub (see rule `02-acp2gh.mdc` / skill `acp2gh`).
 
-**Commit identity (required):** `macbuilds-dev <muhammadammarchaudhry1@gmail.com>` — never hostname/`*.local` email. **Exception:** Slark/DFC repos use their own identity.
+**Commit identity (required):** `macbuilds-dev <muhammadammarchaudhry1@gmail.com>` on `repos/*` and `other repos/*`; `webmaster-dfc <webmaster@drugfreecompliance.com>` on `webmaster-dfc/*` only. See `.cursor/rules/03-git-identity-*.mdc`. Never hostname/`*.local` email.
