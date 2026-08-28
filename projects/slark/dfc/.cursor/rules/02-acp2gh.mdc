@@ -11,10 +11,16 @@ When the user says **`acp2gh`**:
 - Immediately `git add` → logical `git commit`(s) → `git push` for every repo with changes
 - That phrase **is** permission to commit and push (no extra ask)
 
-## Identity — Slark/DFC exception
+## Identity — webmaster-dfc (STRICT)
 
-This is a **Slark/DFC** repo. Do **NOT** use `macbuilds-dev` / `muhammadammarchaudhry1@gmail.com`.
-Use this repo’s own configured git author identity.
+Every commit to `dfc-backend`, `dfc-frontend`, or `dfc-admin` **must** use:
+
+```bash
+git commit --author="webmaster-dfc <webmaster@drugfreecompliance.com>" -m "…"
+```
+
+Do **NOT** use `macbuilds-dev`, `muhammadammarchaudhry1@gmail.com`, Ammar Chaudhry, or Cursor auto identity.  
+Full rules: `03-git-identity-webmaster-dfc.mdc`.
 
 ## Limits
 

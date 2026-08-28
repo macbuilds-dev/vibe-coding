@@ -46,6 +46,20 @@ slark/dfc/
   dfc-admin/      # ops: donors, payments, panels, reports
 ```
 
+## Git commit identity (required)
+
+All commits to the three app repos must be authored as:
+
+- **Name:** `webmaster-dfc`
+- **Email:** `webmaster@drugfreecompliance.com`
+
+```bash
+git commit --author="webmaster-dfc <webmaster@drugfreecompliance.com>" -m "…"
+```
+
+One-time local config per repo (optional): `git config user.name` / `user.email` in each repo root.  
+Rule file: `.cursor/rules/03-git-identity-webmaster-dfc.mdc` (in this vibe-coding hub).
+
 ## Do not
 
 - Commit secrets (`.env`, LabCorp creds, Stripe keys, Resend key)

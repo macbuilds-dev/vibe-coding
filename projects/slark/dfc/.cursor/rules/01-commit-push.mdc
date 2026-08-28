@@ -11,7 +11,9 @@ When the user asks to commit and/or push, **or says `acp2gh`**:
 2. No empty or junk commits. Do not change global git config.
 3. Prefer feature branch + PR (`gh pr create`) when it helps review or Pull Shark.
 4. Use `Co-authored-by` only if the project documents a real second GitHub identity.
-5. **Identity:** Slark/DFC — use this repo’s own author. Do **not** force `macbuilds-dev` / `muhammadammarchaudhry1@gmail.com`.
+5. **Identity (STRICT):** All commits to `webmaster-dfc/*` repos **must** use  
+   `webmaster-dfc <webmaster@drugfreecompliance.com>` via `--author=…` on every commit.  
+   See `03-git-identity-webmaster-dfc.mdc`. Do **not** use Cursor/Ammar/local hostname identity.
 6. Never force-push main/master unless the user explicitly asks.
 
 ### `acp2gh`
