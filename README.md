@@ -36,7 +36,7 @@ vibe-coding/
   templates/
     AGENTS.md
     docs/ai/{product,architecture,decisions,active,progress,lessons}.md
-    .cursor/rules/{00-memory-workflow,01-commit-push,02-acp2gh}.mdc
+    .cursor/rules/{00-memory-workflow,01-commit-push,02-acp2gh,03-git-identity-macbuilds-dev,03-git-identity-webmaster-dfc}.mdc
 ```
 
 Personal Cursor skill (all repos): `~/.cursor/skills/acp2gh/` — triggered by user saying **`acp2gh`** (add → commit → push to GitHub, max 29 commits/session).
