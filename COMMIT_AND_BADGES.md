@@ -5,41 +5,46 @@ Contribution email: **muhammadammarchaudhry1@gmail.com** (must be verified on Gi
 
 ## Required commit identity (HARD RULE)
 
-**Every commit and push** (including `acp2gh`) MUST use:
+Use the identity that matches the repo’s GitHub org / path. Rule files: `.cursor/rules/03-git-identity-*.mdc`.
+
+### `repos/*` and `other repos/*` (default)
+
+**Every commit and push** (including `acp2gh`) to `macbuilds-dev/*` repos and all checkouts under `~/mac/createex/`, `~/mac/freelance/`, `~/mac/personal/`, `~/mac/university/` MUST use:
 
 | Field | Value |
 |-------|--------|
 | **Name** | `macbuilds-dev` |
 | **Email** | `muhammadammarchaudhry1@gmail.com` |
 
-Agents must set author/committer **per commit** (do **not** rely on hostname fallback):
-
 ```bash
 git -c user.name="macbuilds-dev" -c user.email="muhammadammarchaudhry1@gmail.com" commit ...
 ```
 
-Or:
+Full rules: `03-git-identity-macbuilds-dev.mdc`.
+
+### `webmaster-dfc/*` only
+
+Repos under **github.com/webmaster-dfc/** (`~/mac/slark/dfc/dfc-backend`, `dfc-frontend`, `dfc-admin`) MUST use:
+
+| Field | Value |
+|-------|--------|
+| **Name** | `webmaster-dfc` |
+| **Email** | `webmaster@drugfreecompliance.com` |
 
 ```bash
-export GIT_AUTHOR_NAME="macbuilds-dev"
-export GIT_AUTHOR_EMAIL="muhammadammarchaudhry1@gmail.com"
-export GIT_COMMITTER_NAME="macbuilds-dev"
-export GIT_COMMITTER_EMAIL="muhammadammarchaudhry1@gmail.com"
+git commit --author="webmaster-dfc <webmaster@drugfreecompliance.com>" -m "…"
 ```
 
+Full rules: `03-git-identity-webmaster-dfc.mdc`. Do **not** use `macbuilds-dev` identity there.
+
 **Never** commit as `*@*.local`, machine hostname emails, or any other identity.
-
-### Exception — Slark / DFC only
-
-Repos under **`projects/slark/`** (including **`dfc`**) are **exempt**. Use that repo’s own configured identity; do **not** force `macbuilds-dev` / `muhammadammarchaudhry1@gmail.com` there.
-
-All other repos (createex apps, personal apps, `vibe-coding` hub, etc.) use the identity above.
 
 Before every `acp2gh` push, verify the latest commit:
 
 ```bash
 git log -1 --format='%an <%ae>'
-# expect: macbuilds-dev <muhammadammarchaudhry1@gmail.com>
+# macbuilds-dev repos: macbuilds-dev <muhammadammarchaudhry1@gmail.com>
+# webmaster-dfc repos: webmaster-dfc <webmaster@drugfreecompliance.com>
 ```
 
 If wrong, **stop**, rewrite with the correct author, then push.
@@ -81,7 +86,7 @@ When the user asks for **`acp2gh`** on an app **and** its `mac/ai` hub (or “sa
 ## When user says push / commit / acp2gh
 
 1. Inspect status + diff.
-2. Confirm commit identity (`macbuilds-dev` / `muhammadammarchaudhry1@gmail.com`) unless Slark/DFC.
+2. Confirm commit identity matches the repo (`macbuilds-dev` or `webmaster-dfc` — see identity rules above).
 3. Split into logical commits (file or feature sized), ≤ 29 total this session.
 4. Prefer a feature branch + PR for Push/merge flow (helps Pull Shark) when appropriate; if user said `acp2gh` on an existing shipping branch (e.g. `main`), push that branch unless they asked for a PR.
 5. Show `docs/ai/` memory diffs; wait for OK before committing memory (recommended).
@@ -115,4 +120,4 @@ Do not invent fake co-authors. Set `SECOND_COAUTHOR` in project `docs/ai/decisio
 - Committing with hostname / `*.local` email (breaks contribution streak)
 - Changing global git config in agent sessions (use per-commit `-c` / env instead)
 - Exceeding 29 commits in one session (unless the user explicitly waived the cap for that ship)
-- Using `macbuilds-dev` identity on **Slark/DFC** repos
+- Using `macbuilds-dev` identity on **`webmaster-dfc/*`** repos (or vice versa)
