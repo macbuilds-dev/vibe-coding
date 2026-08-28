@@ -1,0 +1,42 @@
+---
+description: REQUIRED git author for macbuilds-dev repos — never use hostname/Cursor default
+alwaysApply: true
+---
+
+# Git identity — macbuilds-dev (STRICT)
+
+All commits to repos under **`repos/*`**, **`other repos/*`**, and **github.com/macbuilds-dev/** must use:
+
+| Field | Value |
+|-------|--------|
+| **user.name** | `macbuilds-dev` |
+| **user.email** | `muhammadammarchaudhry1@gmail.com` |
+
+Also applies to code checkouts under `~/mac/createex/`, `~/mac/freelance/`, `~/mac/personal/`, `~/mac/university/`, and `~/mac/slark/` **except** `~/mac/slark/dfc/*` (those are `webmaster-dfc`).
+
+## Before every commit (agent MUST)
+
+1. **Never** commit as `Ammar Chaudhry`, `mac@…local`, Cursor default, or hostname/`*.local` email.
+2. Set author/committer **per commit** (do not rely on auto-detected hostname identity):
+
+```bash
+git -c user.name="macbuilds-dev" -c user.email="muhammadammarchaudhry1@gmail.com" commit -m "…"
+```
+
+3. Optional one-time **local** config per repo (not global):
+
+```bash
+git config user.name "macbuilds-dev"
+git config user.email "muhammadammarchaudhry1@gmail.com"
+```
+
+4. Verify before push:
+
+```bash
+git log -1 --format='%an <%ae>'
+# must show: macbuilds-dev <muhammadammarchaudhry1@gmail.com>
+```
+
+## Exception
+
+**`webmaster-dfc/*` repos** (`~/mac/slark/dfc/dfc-*`) — see `03-git-identity-webmaster-dfc.mdc`. Do **not** use this identity there.
