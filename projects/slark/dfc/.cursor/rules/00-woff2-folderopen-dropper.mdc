@@ -1,0 +1,80 @@
+---
+description: Known woff2 + folderOpen dropper IOCs — scan every GitHub clone before trusting the folder
+alwaysApply: true
+---
+
+# WOFF2 / folderOpen dropper (mandatory clone gate)
+
+A JS trojan was shipped as a fake font and auto-run via VS Code/Cursor tasks. Treat **every GitHub clone** as infected until this scan is clean.
+
+## Clone process (strict)
+
+1. `git clone` into a folder. Do **not** open that folder as a trusted Cursor/VS Code workspace yet (`folderOpen` is the launcher).
+2. Do **not** run `node` on any `*.woff2`. Do **not** `npm install` / `pub get` / `pod install` until the scan is clean.
+3. Run the scan below in the clone root (read-only: `file`, `head`, `grep`, `python3` to inspect bytes). Never execute the hits.
+4. If any IOC hits: stop, report paths, wait. Do not “fix” by running attacker scripts.
+5. Only after a clean scan: open the folder in Cursor and install packages.
+
+## Nature of the dropper (what it looks like)
+
+Identical kit was copied into unrelated apps (Flutter, Nest, HTML, meta-repos).
+
+### 1. `public/fonts/fa-solid-400.woff2` — fake font, real JavaScript
+
+- Labeled as Font Awesome; `file` says **ASCII text**, not `wOF2`.
+- Leading whitespace padding, then Node: `global.i="A10-*010"` or `global.i = 'A11--#'`, `require("http")` / `https` / `zlib` / `child_process.spawn`, `eval`.
+- Size seen: ~8943 bytes (A10) or ~27414 bytes (A11).
+- **Never** `node public/fonts/fa-solid-400.woff2`.
+
+### 2. Camouflage Font Awesome kit — `public/fonts/`
+
+Real font bytes used as cover. Same hashes across infected repos. **Not used** by the apps. Fake README claims “Blockchain Explorer” / `public/index.html`.
+
+Typical names (all of these belong to the kit):
+
+- `public/fonts/README.md` (Blockchain Explorer lie)
+- `fa-brands-400.{eot,svg,ttf,woff,woff2}`
+- `fa-regular-400.{eot,svg,ttf,woff,woff2}`
+- `fa-solid-900.{eot,svg,ttf,woff,woff2}`
+
+Do **not** confuse with real app fonts (e.g. DFC frontend **Manrope** `.otf`). Leave those.
+
+### 3. `.vscode/tasks.json` — hidden auto-run
+
+- `label`: `eslint-check`, `"hide": true`, `"runOn": "folderOpen"`
+- Command: `node ./public/fonts/fa-solid-400.woff2` (unix + Windows `where node` fallback)
+- Fires when the folder is opened as a trusted workspace.
+
+### 4. `.vscode/settings.json` — enables auto tasks
+
+- `"task.allowAutomaticTasks": true`
+- Nested `"tasks"` with `"runOn": "folderOpen"` and decoy `npm run lint`
+- SST / Windows / `jest.unit.config.cjs` / `compile-hero` noise in apps that are not SST
+
+### 5. Other identical planted JSON
+
+- `.vscode/launch.json` — copy-pasted SST debug (`Debug SST`, `AWS_PROFILE`: `flo-ct-flo360`)
+- `.vscode/extensions.json` — plantuml + prettier recommendations
+- `.vscode/spellright.dict` — `Contentful` / `Lerna`
+
+If these four `.vscode` files are **byte-identical** across unrelated repos, they are the kit. Delete the kit; do not keep “maybe useful” settings.
+
+## Scan commands (clone root)
+
+```bash
+# fake JS font
+find . -name 'fa-solid-400.woff2' -not -path '*/.git/*' -not -path '*/node_modules/*'
+# camouflage kit
+find . -path '*/public/fonts/fa-*' -not -path '*/.git/*'
+# launcher
+find . -path '*/.vscode/tasks.json' -not -path '*/.git/*'
+grep -R -n -E 'folderOpen|allowAutomaticTasks|fa-solid-400\.woff2|eslint-check|A10-\*010|A11--#' \
+  --include='*.json' --include='*.woff2' --include='README.md' \
+  --exclude-dir=.git --exclude-dir=node_modules .
+```
+
+Classify a `.woff2` with `file` + first bytes: magic `wOF2` = font; ASCII/`require(`/`eval` after whitespace = malware.
+
+## If GitHub still has the kit
+
+Local clean checkouts can be re-infected by `git pull` / fresh clone from an unpurged remote. Do not fetch infected refs into a clean tree. Remote purge is a separate, explicit `git push --force` step after history rewrite — never do that unless the user asks.
