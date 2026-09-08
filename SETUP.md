@@ -26,11 +26,13 @@ Open the project in Cursor → Settings → Rules. You should see project rules 
 
 ## 4. First session ritual
 
-0. **Fresh clone from GitHub:** do **not** open the folder as a trusted Cursor/VS Code workspace until `.cursor/rules/00-clone-malware-scan.mdc` **and** `.cursor/rules/00-woff2-folderopen-dropper.mdc` pass. Do not run `node` on any `*.woff2`. Do not `pub get` / `npm install` / any install hook first. A folder that “used to be on this Mac” still counts if it is a new clone.
+0. **Fresh clone from GitHub:** do **not** open the folder as a trusted Cursor/VS Code workspace until `.cursor/rules/00-clone-malware-scan.mdc` **and** `.cursor/rules/00-woff2-folderopen-dropper.mdc` pass. Do not run `node` on any `*.woff2`. Do not `pub get` / `npm install` / any install hook first. A folder that “used to be on this Mac” still counts if it is a new clone. Also scan **nested** PostCSS/Babel/Tailwind for `global.i=` (see [docs/POLINRIDER-WASH-2026-09-08.md](./docs/POLINRIDER-WASH-2026-09-08.md)). Optional extra: [docs/CLAMAV.md](./docs/CLAMAV.md) (`freshclam` + `clamscan` after the IOC grep).
 1. Read `docs/ai/active.md` + `AGENTS.md`
 2. Do the work
 3. Update `active.md` / `progress.md` (show memory diff before commit — recommended)
 4. On “push”: follow [COMMIT_AND_BADGES.md](./COMMIT_AND_BADGES.md) (max **29** commits per session)
+
+**Createex only:** if the target path contains `/createex/`, bootstrap also copies `.cursor/rules/04-createex-work-ops.mdc` (daily Form, Slack Task Monitor, Team Monitor). Full guide: `mac/ai/projects/createex/CREATEEX-WORK-OPS.md`. Do not copy that rule into freelance/slark/personal.
 
 ## 5. Multi-repo products
 
