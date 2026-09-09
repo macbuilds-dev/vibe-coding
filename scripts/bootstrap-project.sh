@@ -47,6 +47,9 @@ if [[ "$DEST" == *"/createex/"* ]] || [[ "$DEST" == *"/projects/createex/"* ]]; 
     # Only at the createex org hub root, not inside an app folder
     true
   fi
+  echo "Createex + Vercel Hobby: keep Git disconnected; commits stay macbuilds-dev."
+  echo "CLI deploy must hide .git (see Cleaning-App scripts/vercel-prod.sh). Do not commit as createexapple."
+  echo "Createex Slack: channel /taskbot plus easy @Ali status in the same task thread (client-forwardable). Never slash-only."
 fi
 
 echo "Done. Fill AGENTS.md and docs/ai/*.md with project-specific facts."

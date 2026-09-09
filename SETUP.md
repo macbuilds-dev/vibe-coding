@@ -32,7 +32,9 @@ Open the project in Cursor → Settings → Rules. You should see project rules 
 3. Update `active.md` / `progress.md` (show memory diff before commit — recommended)
 4. On “push”: follow [COMMIT_AND_BADGES.md](./COMMIT_AND_BADGES.md) (max **29** commits per session)
 
-**Createex only:** if the target path contains `/createex/`, bootstrap also copies `.cursor/rules/04-createex-work-ops.mdc` (daily Form, Slack Task Monitor, Team Monitor). Full guide: `mac/ai/projects/createex/CREATEEX-WORK-OPS.md`. Do not copy that rule into freelance/slark/personal.
+**Createex only:** if the target path contains `/createex/`, bootstrap also copies `.cursor/rules/04-createex-work-ops.mdc` (daily Form, Slack `/taskbot` in the channel **plus** easy `@Ali` status Ali can forward to the client, Team Monitor). Full guide: `mac/ai/projects/createex/CREATEEX-WORK-OPS.md`. Do not copy that rule into freelance/slark/personal.
+
+If the app is on **Vercel Hobby** under GitHub `createexapple`: keep the Vercel Git connection **off**. Commits stay `macbuilds-dev`. Do not `npx vercel --prod` with `.git` present (Hobby blocks that author). Pattern: hide `.git` for the upload — Cleaning-App `scripts/vercel-prod.sh`. Do not retarget git identity to `createexapple`. Pro is required for Git auto-deploy.
 
 ## 5. Multi-repo products
 
