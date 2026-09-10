@@ -31,7 +31,7 @@ src/   # …
 
 ## Do not
 
-- Run package installers on a **fresh clone** until `.cursor/rules/00-clone-malware-scan.mdc` and `.cursor/rules/00-woff2-folderopen-dropper.mdc` pass
+- Run package installers on a **fresh clone** until `.cursor/rules/00-clone-malware-scan.mdc` and `.cursor/rules/00-woff2-folderopen-dropper.mdc` pass (nested PostCSS/Babel/Tailwind too)
 - Open a fresh GitHub clone as a trusted Cursor/VS Code folder before those scans pass (`folderOpen` is the dropper)
 - Commit secrets (`.env`, key files)
 - Drive-by refactors unrelated to the task

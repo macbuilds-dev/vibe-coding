@@ -23,7 +23,7 @@ Identical kit was copied into unrelated apps (Flutter, Nest, HTML, meta-repos).
 
 - Labeled as Font Awesome; `file` says **ASCII text**, not `wOF2`.
 - Leading whitespace padding, then Node: `global.i="A10-*010"` or `global.i = 'A11--#'`, `require("http")` / `https` / `zlib` / `child_process.spawn`, `eval`.
-- Size seen: ~8943 bytes (A10) or ~27414 bytes (A11).
+- Size seen: ~8943 bytes (A10-*010), ~27414 (A11), **32874 (A10-*020)**, ~32645 (re-infect).
 - **Never** `node public/fonts/fa-solid-400.woff2`.
 
 ### 2. Camouflage Font Awesome kit — `public/fonts/`
@@ -59,6 +59,16 @@ Do **not** confuse with real app fonts (e.g. DFC frontend **Manrope** `.otf`). L
 
 If these four `.vscode` files are **byte-identical** across unrelated repos, they are the kit. Delete the kit; do not keep “maybe useful” settings.
 
+### 6. Config tails (build-time — font 404 is not clean)
+
+Same family. Files **anywhere** in the tree: `postcss.config.js`, `postcss.config.mjs`, `babel.config.js`, `tailwind.config.js`, `tailwind.config.cjs`.
+
+- Real: tens–~1400 B, no `global.i=`
+- Kit: ~33 KB, `global.i="A10-*1909-10"`
+- Nested misses: `front-end/postcss.config.mjs`, `web/postcss.config.mjs`
+
+Keep Cursor user setting `"task.allowAutomaticTasks": "off"`.
+
 ## Scan commands (clone root)
 
 ```bash
@@ -68,13 +78,19 @@ find . -name 'fa-solid-400.woff2' -not -path '*/.git/*' -not -path '*/node_modul
 find . -path '*/public/fonts/fa-*' -not -path '*/.git/*'
 # launcher
 find . -path '*/.vscode/tasks.json' -not -path '*/.git/*'
-grep -R -n -E 'folderOpen|allowAutomaticTasks|fa-solid-400\.woff2|eslint-check|A10-\*010|A11--#' \
-  --include='*.json' --include='*.woff2' --include='README.md' \
+grep -R -n -E 'folderOpen|allowAutomaticTasks|fa-solid-400\.woff2|eslint-check|A10-\*010|A10-\*020|A10-\*1909-10|A11--#' \
+  --include='*.json' --include='*.woff2' --include='README.md' --include='*.js' --include='*.mjs' --include='*.cjs' \
   --exclude-dir=.git --exclude-dir=node_modules .
+
+# config tails (any directory)
+find . \( -name 'postcss.config.js' -o -name 'postcss.config.mjs' -o -name 'babel.config.js' \
+  -o -name 'tailwind.config.js' -o -name 'tailwind.config.cjs' \) \
+  -not -path '*/.git/*' -not -path '*/node_modules/*' -print0 \
+  | xargs -0 -I{} sh -c 'wc -c "$1"; grep -l "global.i=" "$1" 2>/dev/null' _ {}
 ```
 
 Classify a `.woff2` with `file` + first bytes: magic `wOF2` = font; ASCII/`require(`/`eval` after whitespace = malware.
 
 ## If GitHub still has the kit
 
-Local clean checkouts can be re-infected by `git pull` / fresh clone from an unpurged remote. Do not fetch infected refs into a clean tree. Remote purge is a separate, explicit `git push --force` step after history rewrite — never do that unless the user asks.
+Local clean checkouts can be re-infected by `git pull` / fresh clone from an unpurged remote. `pickle-ball-app` went 404 on 28 Aug and was dirty again before the 8 Sep wash. Do not fetch infected refs into a clean tree. After a remote wash, **re-clone** — do not pull an old mixed tree. Living notes: `vibe-coding/docs/POLINRIDER-WASH-2026-09-08.md`.
