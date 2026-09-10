@@ -23,6 +23,8 @@ bash /Users/mac/mac/ai/vibe-coding/scripts/bootstrap-project.sh .
 
 See [SETUP.md](./SETUP.md), [WHY.md](./WHY.md), [MULTI_REPO.md](./MULTI_REPO.md), [COMMIT_AND_BADGES.md](./COMMIT_AND_BADGES.md).
 
+**Malware / PolinRider (7–8 Sep 2026):** how to work, prevent, and scan after the wash — [docs/POLINRIDER-WASH-2026-09-08.md](./docs/POLINRIDER-WASH-2026-09-08.md). Technical strip/push: [docs/WOFF2-FOLDEROPEN-DROPPER-CLEANUP.md](./docs/WOFF2-FOLDEROPEN-DROPPER-CLEANUP.md). ClamAV extra scan: [docs/CLAMAV.md](./docs/CLAMAV.md).
+
 ## Layout
 
 ```
