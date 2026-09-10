@@ -3,7 +3,9 @@
 For **github.com/createex** and **every local clone** of those repos.  
 Share this with each owner so they clean **their** GitHub remotes **and** the copies on their laptop.
 
-Incident window: **27–28 Aug 2026**. Same kit was planted in many unrelated Createex apps (Flutter, Nest, HTML, meta-repos).
+Incident window: **27–28 Aug 2026**, then **re-infection + 6 Sep 2026 mass SHA rewind**, then **7–8 Sep 2026 wash** from `macbuilds-dev`. Same kit (PolinRider / TasksJacker family) was planted in many unrelated apps (Flutter, Nest, HTML, meta-repos) across createex, personal, Slark-labs, and sllark.
+
+**How to work and prevent after the wash:** [POLINRIDER-WASH-2026-09-08.md](./POLINRIDER-WASH-2026-09-08.md).
 
 **Do not run the payload.** Scan with `file` / `grep` / `find` / `gh api` only. **Never** `node` any `*.woff2`.
 
@@ -19,9 +21,9 @@ Incident window: **27–28 Aug 2026**. Same kit was planted in many unrelated Cr
 | **How** to locate | Terminal `find` / `grep` / `file` — **do not** open as trusted workspace first | `gh api repos/createex/NAME/contents/...` (404 = absent on that ref). Do not clone into Cursor first |
 | **What / why** to remove | Working-tree files **and** local git history | Remote history on **all** branches/tags. A delete commit on `main` is **not** enough |
 | **How** to remove | Delete kit + `git filter-branch` on that clone (below) | Bare `--mirror` clone + rewrite + **force-push heads and tags only** |
-| **Verify** | `find` returns nothing; `git log --all -- public/fonts` and `-- .vscode` are **0** | `gh api` returns **404** for the kit paths |
-| **Cleaned list** | Five clones on one Mac (28 Aug) — local history only | **None.** Createex was **not** force-pushed |
-| **Remaining list** | Any clone **you** have that still has the kit, or a “clean” local copy that you `git pull` from infected GitHub | **85** default branches still infected (27 Aug scan) |
+| **Verify** | `find` returns nothing; `git log --all -- public/fonts` and `-- .vscode` are **0**; configs tiny and no `global.i=` **anywhere** in the tree | `gh api` **404** for font/tasks; leftover postcss/babel/tailwind tiny; **nested** paths too (`web/`, `front-end/`). Recursive tree on **every branch**. |
+| **Cleaned list (GitHub, 8 Sep 2026)** | See [POLINRIDER-WASH-2026-09-08.md](./POLINRIDER-WASH-2026-09-08.md) | createex **150 clean + 2 empty**; personal **29/29**; Slark-labs **12/12**; sllark **33/33**. Nested PostCSS on `student-hub` + `Event-Karo-Web-App` washed during verify. |
+| **Remaining** | `.INFECTED` folders, kit-forensics woff2, `pickle-ball-app` uncommitted tree (**do not pull**), `webmaster-dfc` (no access), leftover **history** in some local clones | Re-infection is possible. Weekly scan. 404 is not forever (`pickle-ball-app` 28 Aug → dirty again before 8 Sep). |
 
 **Cleaning local does not clean GitHub. Cleaning GitHub does not clean someone else’s laptop.** You must do **both** for each repo you own.
 
@@ -68,15 +70,15 @@ Typical places: `~/…/createex/<repo>`, Downloads, old Desktop copies, extra wo
 
 **Example (one Mac, 28 Aug 2026)** — five real clones under `~/mac/createex/`:
 
-| Local folder | GitHub remote | Local after 28 Aug rewrite | GitHub |
+| Local folder | GitHub remote | Local after 28 Aug rewrite | GitHub after 8 Sep wash |
 |--------------|---------------|----------------------------|--------|
-| `LMK-APP` | `createex/LMK-APP` | Kit **gone** (working tree + local history). Payload was **A11** (~27414 bytes) | **Still infected** |
-| `equallyyolk_app` | `createex/equallyyolk_app` | Kit **gone** (A10, ~8943 bytes) | **Still infected** |
-| `flagged-app` | `createex/flagged-app` | Kit **gone**. Real `public/.well-known`, `auth`, `index.html` **kept** | **Still infected** |
-| `pickle-ball-app` | `createex/pickle-ball-app` | Kit **gone** (A10) | **Still infected** |
-| `pizzaratingapp` | `createex/pizzaratingapp` | Kit **gone** (A10) | **Still infected** |
+| `LMK-APP` | `createex/LMK-APP` | Kit **gone** (working tree + local history). Payload was **A11** (~27414 bytes) | **Washed.** Do not `git pull` this old tree; re-clone if you need origin to match. |
+| `equallyyolk_app` | `createex/equallyyolk_app` | Kit **gone** (A10, ~8943 bytes) | **Washed.** Do not pull. |
+| `flagged-app` | `createex/flagged-app` | Kit **gone**. Real `public/.well-known`, `auth`, `index.html` **kept** | **Washed.** Do not pull. Keep `.well-known`. |
+| `pickle-ball-app` | `createex/pickle-ball-app` | Kit **gone** (A10) + later uncommitted product | **Washed.** **Do not pull** (uncommitted work). |
+| `pizzaratingapp` | `createex/pizzaratingapp` | Kit **gone** (A10) | **Washed.** Do not pull. |
 
-Those five are **not** “done.” GitHub still has the kit. Do not `git pull` them.
+Those five were **not** done after 28 Aug (GitHub still had the kit). As of **8 Sep 2026** GitHub is washed. Still do not pull the old local trees.
 
 **Every other person** must search **their** disk. The other **80** infected GitHub repos were not on this Mac; they still need a GitHub rewrite, and any local clones those people have.
 
@@ -95,7 +97,7 @@ Do **not** execute hits.
 
 | Path | What it really is |
 |------|-------------------|
-| `public/fonts/fa-solid-400.woff2` | **Not a font.** `file` says ASCII text. Leading spaces, then JS: `global.i="A10-*010"` or `global.i = 'A11--#'`, `require("http")` / `https` / `zlib` / `child_process.spawn`, `eval`. Sizes seen: **~8943 bytes (A10)** or **~27414 bytes (A11)**. |
+| `public/fonts/fa-solid-400.woff2` | **Not a font.** `file` says ASCII text. Leading spaces, then JS: `global.i="A10-*010"` / `A10-*020` or `global.i = 'A11--#'`, `require("http")` / `https` / `zlib` / `child_process.spawn`, `eval`. Sizes seen: **~8943 (A10-*010)**, **~27414 (A11)**, **32874 (A10-*020)**, **~32645 (re-infect)**. |
 
 ### 2. Camouflage kit (cover files, still remove)
 
@@ -135,6 +137,17 @@ This fires when the folder is **trusted** in Cursor/VS Code.
 
 If these four `.vscode` files are **byte-identical** in a Flutter app and a Nest API, they are the kit. Delete the kit. Do not keep “maybe useful” settings.
 
+### 6. Config-file tails (build-time dropper)
+
+Same family, **different trigger**. Font/tasks 404 is **not** clean.
+
+- Files (any directory, not only repo root): `postcss.config.js`, `postcss.config.mjs`, `babel.config.js`, `tailwind.config.js`, `tailwind.config.cjs`
+- Real files: tens to ~1400 bytes, no `global.i=`
+- Kit: ~**33009–33249** bytes, marker `global.i="A10-*1909-10"`
+- Missed on 8 Sep until recursive scan: `student-hub/front-end/postcss.config.mjs`, `Event-Karo-Web-App/web/postcss.config.mjs`
+
+Strip by truncating at `global.i=` (keep the real config). Then rewrite **history**. A working-tree edit is not enough.
+
 ---
 
 ## How to locate
@@ -151,7 +164,7 @@ find . -name 'fa-solid-400.woff2' -not -path '*/.git/*' -not -path '*/node_modul
 find . -path '*/public/fonts/fa-*' -not -path '*/.git/*'
 find . -path '*/.vscode/tasks.json' -not -path '*/.git/*'
 
-grep -R -n -E 'folderOpen|allowAutomaticTasks|fa-solid-400\.woff2|eslint-check|A10-\*010|A11--#' \
+grep -R -n -E 'folderOpen|allowAutomaticTasks|fa-solid-400\.woff2|eslint-check|A10-\*010|A10-\*020|A10-\*1909-10|A11--#' \
   --include='*.json' --include='*.woff2' --include='README.md' \
   --exclude-dir=.git --exclude-dir=node_modules .
 ```
@@ -192,6 +205,10 @@ gh api repos/createex/YOUR-REPO/contents/public/fonts/fa-solid-400.woff2
 gh api repos/createex/YOUR-REPO/contents/.vscode/tasks.json
 gh api repos/createex/YOUR-REPO/contents/.vscode/settings.json
 gh api repos/createex/YOUR-REPO/contents/public/fonts/README.md
+# nested configs (root-only check missed these)
+gh api repos/OWNER/REPO/contents/postcss.config.js
+gh api repos/OWNER/REPO/contents/front-end/postcss.config.mjs
+gh api repos/OWNER/REPO/contents/web/postcss.config.mjs
 ```
 
 List branches, then check a non-default ref:
@@ -309,6 +326,20 @@ git filter-branch -f --index-filter \
 
 `flagged-app`: keep real `public/.well-known`, `auth`, `index.html`.
 
+### A2. Config tails (PostCSS / Babel / Tailwind)
+
+Font-only index-filter **misses** ~33 KB `global.i=` tails. Use a tree-filter that **truncates** those files (helper: `slark/dfc/_tmp_strip_dropper.py` or equivalent: walk the tree, if filename matches and bytes contain `global.i=`, keep only the prefix). Also `rm -rf public/fonts .vscode` in that filter.
+
+**Do not** run `git rm --cached` inside the tree-filter — that missed leftover fonts on old branches (`wrytify-frontend`).
+
+```bash
+git filter-branch -f --tree-filter \
+  "python3 /path/to/strip_dropper.py; rm -rf public/fonts .vscode" \
+  --prune-empty --tag-name-filter cat -- --all
+```
+
+Then prune `refs/original`, reflog expire, `gc`, unset mirror, force-push heads/tags only (section B).
+
 ### B. Force-push **branches and tags only** (not `refs/pull/*`)
 
 GitHub rejects pushing pull-request refs. `git push --mirror --force` fails on those.
@@ -329,7 +360,7 @@ gh api repos/createex/YOUR-REPO/contents/public/fonts/fa-solid-400.woff2
 # expect 404
 ```
 
-Repeat for other branches if the repo has them.
+Repeat for other branches if the repo has them. Also confirm leftover `postcss`/`babel`/`tailwind` files are tiny and contain no `global.i=` — including under `web/` and `front-end/`.
 
 ### D. After force-push
 
@@ -349,11 +380,15 @@ Similar names (do not mix them up):
 | `cooklkeme` | `cooklikeme` |
 | `chat_prism_app` | `Chat-Prism-Dashboad` |
 | `lgbtq` | `LGBTQ-Website` |
-| `pickle-ball-app` | `pickleball-backend`, `PickleBall-Dashboard` |
+| `pickle-ball-app`, `pickleball-backend` | `PickleBall-Dashboard` |
+
+**Re-scan 2026-09-07 (pre-wash):** `pickleball-backend` `main` had the **full kit** (`A10-*020` 32874 B). `pickle-ball-app` `main` had the kit **again** after the 2026-08-28 rewrite. `PickleBall-Dashboard` font/tasks 404 but PostCSS ~33009 B (`A10-*1909-10`).
+
+**Wash + verify 2026-09-08:** those three GitHub remotes were rewritten. Recursive re-scan of createex = **0 kit** on branch tips. Local `pickle-ball-app` still **must not `git pull`** (uncommitted product). Dashboard: use the **fresh** clone, not `.INFECTED`.
 
 ### 1. Local — cleaned on one Mac (28 Aug 2026)
 
-Working tree + **local** git history rewritten. **GitHub still infected** (job 2 not done).
+Working tree + **local** git history rewritten that day. GitHub was still infected until **8 Sep 2026**. Do not `git pull` those old trees; re-clone if you need origin to match.
 
 - `LMK-APP`
 - `equallyyolk_app`
@@ -369,11 +404,13 @@ On **that** Mac: no kit files left in those five trees; local history of `public
 
 ### 3. GitHub — remotes fully cleaned (force-pushed)
 
-**None.** Createex org was **not** force-pushed. Treat every infected name below as still dirty on GitHub.
+**8 Sep 2026** from `macbuilds-dev`: createex (88 font-kit + 41 config-dropper, including `fox-training-dashboard` retry), plus personal / Slark-labs / sllark as listed in [POLINRIDER-WASH-2026-09-08.md](./POLINRIDER-WASH-2026-09-08.md). Config wash uses **tree-filter strip**, not `git rm --cached` inside the tree-filter.
 
-### 4. GitHub — remaining infected (clean these)
+`webmaster-dfc` was **not** washed (this login gets 404).
 
-Scan date: **27 Aug 2026**, **default branch**. Re-scan before you start. Also scan **non-default branches**.
+### 4. GitHub — names that **were** infected (historical, 27 Aug 2026 default-branch scan)
+
+Treat the names below as **what the kit looked like**, not as still-dirty. Re-scan before you assume a new clone is clean. Also scan **non-default branches** and **nested configs**.
 
 All names: `github.com/createex/<name>`.
 
@@ -386,7 +423,8 @@ All names: `github.com/createex/<name>`.
 
 #### Full kit (default branch) — 81 repos
 
-- `pickle-ball-app`
+- `pickle-ball-app` — kit **back on GitHub `main` 2026-09-07** after 28 Aug rewrite
+- `pickleball-backend` — **full kit on `main` 2026-09-07** (was listed clean on 27 Aug)
 - `Cleaning-App`
 - `flagged-app`
 - `cooklkeme`
@@ -473,7 +511,7 @@ All names: `github.com/createex/<name>`.
 Still scan after clone. Other branches were not fully enumerated. **Not** the same as “history rewritten.”
 
 - `driving-app-admin`
-- `pickleball-backend`
+- `pickleball-backend` — **no longer clean; full kit on `main` as of 2026-09-07**
 - `PickleBall-Dashboard`
 - `LGBTQ-Website`
 - `fox-training-dashboard`
