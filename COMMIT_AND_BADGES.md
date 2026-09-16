@@ -71,7 +71,9 @@ Project rule template: `templates/.cursor/rules/02-acp2gh.mdc`
 **Max 29 commits per chat/work session** when the user asks to commit/push (including via `acp2gh`).  
 Prefer many small *real* commits. Never empty/junk commits.
 
-**Waiver:** If the user **explicitly** says to overlook / exceed the 29 limit for this ship, do so for that session only. Still prefer many small real commits; never empty/junk commits.
+**PRs / issues:** no numeric session cap by default. Prefer several small PRs (Pull Shark) and Quickdraw issues when badge-shipping. Explicit per-ship waiver can raise volume (e.g. Pizzio **50** commits + issues/PRs).
+
+**Waiver:** If the user **explicitly** says to overlook / exceed the 29 commit limit for this ship, do so for that session only. Still prefer many small real commits; never empty/junk commits.
 
 Example waiver (2026-08-12 Pizzio): user set **50** commits + issues/PRs for badges for that ship only.
 
